@@ -1,3 +1,92 @@
+/*
+Copyright (c) 2024 fbrega10
+MIT License
+* StringUtils
+*/
+
+pub fn trim(s: &mut String) {
+    //trimming a string removing prefix/suffix spaces
+    if s.len() < 2 {
+        println!("string lenght must be at least of two characters long. Exit 1");
+        return;
+    }
+    let mut start = 0;
+    let mut end: usize = s.len() as usize - 1;
+    for (i, c) in s.char_indices() {
+        match c != ' ' {
+            true => {
+                start = i;
+                println!("the value of start is {}", start);
+                break;
+            }
+            _ => (),
+        }
+    }
+    for (i, c) in s.chars().rev().enumerate() {
+        match c != ' ' {
+            true => {
+                end = end - i;
+                println!("the value of start is {}", end);
+                break;
+            }
+            _ => (),
+        }
+    }
+    *s = s.chars().skip(start).take(end).collect();
+}
+
+pub fn substring(s: &String, start_index: usize, end_index: usize) -> Option<String> {
+    if start_index < end_index || s.len() - 1 < end_index {
+        println!(
+            "invalid indexes, please choose the correct indexes for the string size : {}",
+            s.len()
+        );
+        return None;
+    }
+    Some(
+        s.chars()
+            .skip(start_index)
+            .take(end_index - start_index)
+            .collect(),
+    )
+}
+
+pub fn left(s: &mut String, elements: usize) -> Option<String> {
+    let start: usize = 0;
+    if s.len() - 1 < elements {
+        println!("index out of bounds");
+        return None;
+    }
+    Some(s.chars().skip(start).take(elements).collect())
+}
+
+pub fn right(s: &mut String, elements: usize) -> Option<String> {
+    if s.len() - 1 < elements {
+        println!("index out of bounds");
+        return None;
+    }
+    Some(s.chars().skip(s.len() - elements).take(elements).collect())
+}
+
+pub fn reverse_string(s: &mut String) -> Option<String> {
+    if s.len() < 2 {
+        println!("invalid string length, must be at least 2 characters to reverse it");
+        return None;
+    }
+    Some(s.chars().rev().collect())
+}
+
+pub fn ends_with(s: &String, s2: &String) -> bool {
+    match substring(s, s.len() - s2.len(), s.len()) {
+        Some(res) => res == *s2,
+        None => false,
+    }
+}
+
+/*
+* StringBuilder
+*/
+
 #[derive(Debug)]
 pub struct StringBuilder {
     content: String,
