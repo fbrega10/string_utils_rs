@@ -36,7 +36,7 @@ pub fn trim(s: &mut String) {
 }
 
 pub fn substring(s: &String, start_index: usize, end_index: usize) -> Option<String> {
-    if start_index < end_index || s.len() - 1 < end_index {
+    if start_index > end_index || s.len() - 1 < end_index {
         println!(
             "invalid indexes, please choose the correct indexes for the string size : {}",
             s.len()
@@ -46,7 +46,7 @@ pub fn substring(s: &String, start_index: usize, end_index: usize) -> Option<Str
     Some(
         s.chars()
             .skip(start_index)
-            .take(end_index - start_index)
+            .take(end_index - start_index + 1)
             .collect(),
     )
 }
@@ -66,6 +66,10 @@ pub fn right(s: &mut String, elements: usize) -> Option<String> {
         return None;
     }
     Some(s.chars().skip(s.len() - elements).take(elements).collect())
+}
+
+pub fn eliminate_whitespaces(s: &mut String) {
+    *s = s.chars().filter(|c| c.ne(&' ')).collect::<String>()
 }
 
 pub fn reverse_string(s: &mut String) -> Option<String> {
